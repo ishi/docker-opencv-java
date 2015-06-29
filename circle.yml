@@ -3,9 +3,20 @@ machine:
     - docker
 
 dependencies:
+  cache_directories:
+    - "~/docker"
   override:
     - docker info
+    - if [[ -e ~/docker/image.tar ]]; then docker load -i ~/docker/image.tar; fi
     - docker build -t stonerworx/opencv-java .
+    - CONTAINERID=$(docker run -d stonerworx/opencv-java /bin/bash -c)
+    - mkdir -p ~/docker; docker save stonerworx/opencv-java > ~/docker/image.tar
+
+test:
+  override:
+    - docker run stonerworx/opencv-java /home/opencv/build/bin/opencv_test_core
+  post:
+    - docker cp $CONTAINERID:/home/javalibs $CIRCLE_ARTIFACTS
 
 deployment:
   hub:

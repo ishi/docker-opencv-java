@@ -24,14 +24,14 @@ RUN apt-get update -y ; \
     libgstreamer-plugins-base0.10-dev libv4l-dev libtbb-dev libqt4-dev libgtk2.0-dev \
     ant git unzip
 
-WORKDIR "/home"
+WORKDIR /home
 
 # install opencv
 RUN git clone https://github.com/Itseez/opencv.git
-WORKDIR "opencv"
+WORKDIR /home/opencv
 RUN git checkout 2.4.11 ; \
     mkdir build
-WORKDIR "build"
+WORKDIR /home/opencv/build
 RUN cmake -D WITH_QT=ON -D WITH_XINE=ON -D WITH_OPENGL=ON -D WITH_TBB=ON -D BUILD_EXAMPLES=ON .. ; \
     make -j8 & make install ; \
     echo '/usr/local/lib' >> /etc/ld.so.conf ; \

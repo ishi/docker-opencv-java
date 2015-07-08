@@ -16,13 +16,13 @@ RUN echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true 
 ENV JAVA_HOME /usr/lib/jvm/java-8-oracle
 ENV PATH $PATH:$JAVA_HOME/bin
 
-# install dependencies
+# install dependencies etc
 RUN apt-get update -y ; \
     apt-get install -y build-essential checkinstall cmake pkg-config yasm \
     libtiff4-dev libjpeg-dev libjasper-dev libavcodec-dev libavformat-dev \
     libswscale-dev libdc1394-22-dev libxine-dev libgstreamer0.10-dev \
     libgstreamer-plugins-base0.10-dev libv4l-dev libtbb-dev libqt4-dev libgtk2.0-dev \
-    ant git unzip
+    ant git unzip curl
 
 WORKDIR /home
 
@@ -48,3 +48,10 @@ RUN wget https://downloads.gradle.org/distributions/gradle-2.4-bin.zip ; \
 # add gradle to path
 ENV GRADLE_HOME /usr/local/gradle
 ENV PATH $PATH:$GRADLE_HOME/bin
+
+# gradle user home
+RUN mkdir -p /home/gradle
+ENV GRADLE_USER_HOME=/home/gradle
+
+# clean up after yourself
+RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*

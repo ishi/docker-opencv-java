@@ -4,7 +4,7 @@ FROM ubuntu
 RUN apt-get update -y \
     && apt-get install -y software-properties-common python-software-properties \
     && apt-get clean \
-	&& rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/*
 
 # install Java 8
 RUN echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | debconf-set-selections \
@@ -12,7 +12,7 @@ RUN echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true 
     && apt-get update \
     && apt-get install -y oracle-java8-installer \
     && apt-get clean \
-	&& rm -rf /var/lib/apt/lists/* \
+    && rm -rf /var/lib/apt/lists/* \
     && rm -rf /var/cache/oracle-jdk8-installer
 
 # add java to path
@@ -27,7 +27,7 @@ RUN apt-get update -y \
     libgstreamer-plugins-base0.10-dev libv4l-dev libtbb-dev libqt4-dev libgtk2.0-dev \
     ant git unzip curl \
     && apt-get clean \
-	&& rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /home
 
